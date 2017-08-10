@@ -15,12 +15,12 @@ knitr::opts_chunk$set(echo=FALSE, warning=FALSE, message=FALSE, results = "asis"
 ### Appendix Table 1. Input Data for Single Dose Simulation
 
 ```{r}
-knitr::kable(read.csv("../result/Data_SingleDose.csv"), row.names = TRUE, digits = 1)
+knitr::kable(read.csv("result/Data_SingleDose.csv"), row.names = TRUE, digits = 1)
 ```
 
 ### Appendix Table 2. Input Data for Multiple Dose Simulation
 
 ```{r}
-knitr::kable(read.csv("../result/Data_MultipleDose.csv"), row.names = TRUE, digits = 1)
+knitr::kable(read.csv("result/Data_MultipleDose.csv"), row.names = TRUE, digits = 1)
 ```
 

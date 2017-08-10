@@ -2,14 +2,15 @@
 
 # setup ----
 
-library(tidyverse)
-library(caffsim) # devtools::install_github('asancpt/caffsim')
 source("R/function.R")
 
-#localLibPath <- c("./lib", .libPaths())
-#.libPaths(localLibPath)
+localLibPath <- c("./lib", .libPaths())
+if (Get_os() == 'linux') .libPaths(localLibPath)
+.libPaths()
 
-edisonlib <- c("mgcv", "psych", "markdown", "knitr")
+library(caffsim) # devtools::install_github('asancpt/caffsim')
+
+edisonlib <- c("tidyverse", "mgcv", "psych", "markdown", "knitr")
 lapply(edisonlib, function(pkg) {
   if (system.file(package = pkg) == '') install.packages(pkg)
 })
@@ -135,19 +136,19 @@ if (Get_os() != "linux") {
 }
 
 # Summary
-file_doc <- "inst/documentation"
+file_doc <- "documentation"
 knit(paste0(file_doc, ".Rmd"), paste0(file_doc, ".md"))
 markdownToHTML(paste0(file_doc, ".md"), "result/Report_Summary.html", options = c("toc", "mathjax"))#, stylesheet = "css/my.css")
 # browseURL("result/Report_Summary.html")
 
 # Appendix
-file_doc2 <- "inst/appendix"
+file_doc2 <- "appendix"
 knit(paste0(file_doc2, ".Rmd"), paste0(file_doc2, ".md"))
 markdownToHTML(paste0(file_doc2, ".md"), "result/Report_Appendix.html", options = c("toc", "mathjax"))#, stylesheet = "mycss.css")
 # browseURL("result/Report_Appendix.html")
 
 # Tidy
 system(ifelse(Get_os() != "linux", "ls result/*.jpg", 'rm result/*.pdf'))
+system(paste0('rm ', file_doc, ".md ", file_doc2, ".md"))
 
 # system('cp result/*.jpg ./')
-# system(paste0('rm ', file_doc, ".md ", file_doc2, ".md"))
