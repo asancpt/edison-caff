@@ -1,0 +1,7 @@
+concBWT = 30 ;
+concDose = 250 ;
+concNum = 20 ;
+Log = FALSE ;
+pformat = Jitter ;
+superTau = 12 ;
+superRepeat = 5 ;

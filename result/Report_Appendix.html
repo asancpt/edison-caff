@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Caffeine Concentration Simulation</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<div id="toc">
+<div id="toc_header">Table of Contents</div>
+<ul>
+<li>
+<a href="#toc_0">Caffeine Concentration Simulation</a>
+<ul>
+<li>
+<a href="#toc_1">Appendix</a>
+<ul>
+<li>
+<a href="#toc_2">Appendix Figure 1. Caffeine in Energy Drinks</a>
+</li>
+<li>
+<a href="#toc_3">Appendix Table 1. Input Data for Single Dose Simulation</a>
+</li>
+<li>
+<a href="#toc_4">Appendix Table 2. Input Data for Multiple Dose Simulation</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<h1 id="toc_0">Caffeine Concentration Simulation</h1>
+
+<ul>
+<li>Report Time: 2017-08-10 11:56:50 </li>
+</ul>
+
+<h2 id="toc_1">Appendix</h2>
+
+<h3 id="toc_2">Appendix Figure 1. Caffeine in Energy Drinks</h3>
+
+<p><img src="Caffeine-Content-in-Energy-Drinks.jpg" alt="Caffeine in Energy Drinks"></p>
+
+<h3 id="toc_3">Appendix Table 1. Input Data for Single Dose Simulation</h3>
+
+<table><thead>
+<tr>
+<th align="left"></th>
+<th align="right">Tmax</th>
+<th align="right">Cmax</th>
+<th align="right">AUC</th>
+<th align="right">Half_life</th>
+<th align="right">CL</th>
+<th align="right">V</th>
+<th align="right">Ka</th>
+<th align="right">Ke</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">1</td>
+<td align="right">0.3</td>
+<td align="right">6.8</td>
+<td align="right">40.5</td>
+<td align="right">3.9</td>
+<td align="right">6.2</td>
+<td align="right">35.0</td>
+<td align="right">16.9</td>
+<td align="right">0.2</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="right">2.3</td>
+<td align="right">8.0</td>
+<td align="right">76.0</td>
+<td align="right">4.7</td>
+<td align="right">3.3</td>
+<td align="right">22.5</td>
+<td align="right">1.0</td>
+<td align="right">0.1</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="right">0.3</td>
+<td align="right">14.7</td>
+<td align="right">109.2</td>
+<td align="right">4.9</td>
+<td align="right">2.3</td>
+<td align="right">16.3</td>
+<td align="right">14.7</td>
+<td align="right">0.1</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="right">0.2</td>
+<td align="right">11.7</td>
+<td align="right">71.8</td>
+<td align="right">4.1</td>
+<td align="right">3.5</td>
+<td align="right">20.6</td>
+<td align="right">23.6</td>
+<td align="right">0.2</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="right">0.7</td>
+<td align="right">10.7</td>
+<td align="right">48.3</td>
+<td align="right">2.6</td>
+<td align="right">5.2</td>
+<td align="right">19.5</td>
+<td align="right">4.4</td>
+<td align="right">0.3</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="right">0.4</td>
+<td align="right">8.6</td>
+<td align="right">50.4</td>
+<td align="right">3.8</td>
+<td align="right">5.0</td>
+<td align="right">27.2</td>
+<td align="right">10.5</td>
+<td align="right">0.2</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="right">0.9</td>
+<td align="right">13.5</td>
+<td align="right">172.1</td>
+<td align="right">8.2</td>
+<td align="right">1.5</td>
+<td align="right">17.1</td>
+<td align="right">4.3</td>
+<td align="right">0.1</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="right">1.0</td>
+<td align="right">10.8</td>
+<td align="right">66.6</td>
+<td align="right">3.5</td>
+<td align="right">3.8</td>
+<td align="right">19.0</td>
+<td align="right">2.9</td>
+<td align="right">0.2</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="right">0.6</td>
+<td align="right">11.7</td>
+<td align="right">95.8</td>
+<td align="right">5.3</td>
+<td align="right">2.6</td>
+<td align="right">19.8</td>
+<td align="right">6.9</td>
+<td align="right">0.1</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="right">0.4</td>
+<td align="right">9.8</td>
+<td align="right">82.0</td>
+<td align="right">5.5</td>
+<td align="right">3.0</td>
+<td align="right">24.3</td>
+<td align="right">11.1</td>
+<td align="right">0.1</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="right">1.1</td>
+<td align="right">8.7</td>
+<td align="right">56.9</td>
+<td align="right">3.7</td>
+<td align="right">4.4</td>
+<td align="right">23.7</td>
+<td align="right">2.7</td>
+<td align="right">0.2</td>
+</tr>
+<tr>
+<td align="left">12</td>
+<td align="right">0.3</td>
+<td align="right">9.6</td>
+<td align="right">86.6</td>
+<td align="right">6.0</td>
+<td align="right">2.9</td>
+<td align="right">25.2</td>
+<td align="right">18.5</td>
+<td align="right">0.1</td>
+</tr>
+<tr>
+<td align="left">13</td>
+<td align="right">1.0</td>
+<td align="right">9.0</td>
+<td align="right">83.1</td>
+<td align="right">5.7</td>
+<td align="right">3.0</td>
+<td align="right">24.6</td>
+<td align="right">3.4</td>
+<td align="right">0.1</td>
+</tr>
+<tr>
+<td align="left">14</td>
+<td align="right">1.3</td>
+<td align="right">7.4</td>
+<td align="right">47.5</td>
+<td align="right">3.5</td>
+<td align="right">5.3</td>
+<td align="right">26.4</td>
+<td align="right">2.1</td>
+<td align="right">0.2</td>
+</tr>
+<tr>
+<td align="left">15</td>
+<td align="right">0.4</td>
+<td align="right">12.5</td>
+<td align="right">139.9</td>
+<td align="right">7.4</td>
+<td align="right">1.8</td>
+<td align="right">19.1</td>
+<td align="right">10.9</td>
+<td align="right">0.1</td>
+</tr>
+<tr>
+<td align="left">16</td>
+<td align="right">0.8</td>
+<td align="right">9.6</td>
+<td align="right">75.7</td>
+<td align="right">4.8</td>
+<td align="right">3.3</td>
+<td align="right">23.0</td>
+<td align="right">4.1</td>
+<td align="right">0.1</td>
+</tr>
+<tr>
+<td align="left">17</td>
+<td align="right">0.6</td>
+<td align="right">14.1</td>
+<td align="right">124.8</td>
+<td align="right">5.7</td>
+<td align="right">2.0</td>
+<td align="right">16.5</td>
+<td align="right">6.8</td>
+<td align="right">0.1</td>
+</tr>
+<tr>
+<td align="left">18</td>
+<td align="right">1.6</td>
+<td align="right">7.3</td>
+<td align="right">51.9</td>
+<td align="right">3.7</td>
+<td align="right">4.8</td>
+<td align="right">25.6</td>
+<td align="right">1.5</td>
+<td align="right">0.2</td>
+</tr>
+<tr>
+<td align="left">19</td>
+<td align="right">0.7</td>
+<td align="right">10.9</td>
+<td align="right">107.5</td>
+<td align="right">6.3</td>
+<td align="right">2.3</td>
+<td align="right">21.2</td>
+<td align="right">5.7</td>
+<td align="right">0.1</td>
+</tr>
+<tr>
+<td align="left">20</td>
+<td align="right">0.5</td>
+<td align="right">13.2</td>
+<td align="right">111.9</td>
+<td align="right">5.5</td>
+<td align="right">2.2</td>
+<td align="right">17.9</td>
+<td align="right">9.1</td>
+<td align="right">0.1</td>
+</tr>
+</tbody></table>
+
+<h3 id="toc_4">Appendix Table 2. Input Data for Multiple Dose Simulation</h3>
+
+<table><thead>
+<tr>
+<th align="left"></th>
+<th align="right">TmaxS</th>
+<th align="right">CmaxS</th>
+<th align="right">AUCS</th>
+<th align="right">AI</th>
+<th align="right">Aavss</th>
+<th align="right">Cavss</th>
+<th align="right">Cmaxss</th>
+<th align="right">Cminss</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">1</td>
+<td align="right">0.6</td>
+<td align="right">12.2</td>
+<td align="right">70.6</td>
+<td align="right">1.1</td>
+<td align="right">107.3</td>
+<td align="right">5.9</td>
+<td align="right">15.2</td>
+<td align="right">1.5</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="right">0.5</td>
+<td align="right">14.5</td>
+<td align="right">106.4</td>
+<td align="right">1.2</td>
+<td align="right">142.4</td>
+<td align="right">8.9</td>
+<td align="right">18.8</td>
+<td align="right">3.3</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="right">8.4</td>
+<td align="right">4.0</td>
+<td align="right">92.6</td>
+<td align="right">1.4</td>
+<td align="right">194.8</td>
+<td align="right">7.7</td>
+<td align="right">13.7</td>
+<td align="right">3.8</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="right">0.9</td>
+<td align="right">9.7</td>
+<td align="right">89.7</td>
+<td align="right">1.3</td>
+<td align="right">172.5</td>
+<td align="right">7.5</td>
+<td align="right">14.1</td>
+<td align="right">3.3</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="right">0.7</td>
+<td align="right">12.1</td>
+<td align="right">73.8</td>
+<td align="right">1.1</td>
+<td align="right">109.7</td>
+<td align="right">6.1</td>
+<td align="right">15.6</td>
+<td align="right">1.6</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="right">1.7</td>
+<td align="right">10.2</td>
+<td align="right">124.4</td>
+<td align="right">1.5</td>
+<td align="right">214.4</td>
+<td align="right">10.4</td>
+<td align="right">17.5</td>
+<td align="right">5.5</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="right">1.9</td>
+<td align="right">10.9</td>
+<td align="right">161.7</td>
+<td align="right">1.6</td>
+<td align="right">265.0</td>
+<td align="right">13.5</td>
+<td align="right">20.8</td>
+<td align="right">8.1</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="right">0.3</td>
+<td align="right">17.0</td>
+<td align="right">96.6</td>
+<td align="right">1.1</td>
+<td align="right">112.8</td>
+<td align="right">8.0</td>
+<td align="right">20.0</td>
+<td align="right">2.2</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="right">0.2</td>
+<td align="right">13.7</td>
+<td align="right">106.6</td>
+<td align="right">1.3</td>
+<td align="right">157.5</td>
+<td align="right">8.9</td>
+<td align="right">17.7</td>
+<td align="right">3.6</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="right">0.4</td>
+<td align="right">12.1</td>
+<td align="right">134.4</td>
+<td align="right">1.5</td>
+<td align="right">222.9</td>
+<td align="right">11.2</td>
+<td align="right">18.6</td>
+<td align="right">6.1</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="right">2.3</td>
+<td align="right">6.9</td>
+<td align="right">60.1</td>
+<td align="right">1.2</td>
+<td align="right">122.8</td>
+<td align="right">5.0</td>
+<td align="right">11.7</td>
+<td align="right">1.5</td>
+</tr>
+<tr>
+<td align="left">12</td>
+<td align="right">1.1</td>
+<td align="right">13.0</td>
+<td align="right">151.3</td>
+<td align="right">1.5</td>
+<td align="right">217.1</td>
+<td align="right">12.6</td>
+<td align="right">21.2</td>
+<td align="right">6.7</td>
+</tr>
+<tr>
+<td align="left">13</td>
+<td align="right">0.4</td>
+<td align="right">11.1</td>
+<td align="right">92.5</td>
+<td align="right">1.3</td>
+<td align="right">164.7</td>
+<td align="right">7.7</td>
+<td align="right">15.0</td>
+<td align="right">3.3</td>
+</tr>
+<tr>
+<td align="left">14</td>
+<td align="right">1.0</td>
+<td align="right">12.5</td>
+<td align="right">65.9</td>
+<td align="right">1.1</td>
+<td align="right">87.0</td>
+<td align="right">5.5</td>
+<td align="right">16.7</td>
+<td align="right">0.9</td>
+</tr>
+<tr>
+<td align="left">15</td>
+<td align="right">2.1</td>
+<td align="right">11.1</td>
+<td align="right">123.8</td>
+<td align="right">1.3</td>
+<td align="right">182.2</td>
+<td align="right">10.3</td>
+<td align="right">18.9</td>
+<td align="right">4.8</td>
+</tr>
+<tr>
+<td align="left">16</td>
+<td align="right">2.3</td>
+<td align="right">11.8</td>
+<td align="right">128.2</td>
+<td align="right">1.3</td>
+<td align="right">171.8</td>
+<td align="right">10.7</td>
+<td align="right">20.2</td>
+<td align="right">4.7</td>
+</tr>
+<tr>
+<td align="left">17</td>
+<td align="right">0.7</td>
+<td align="right">9.1</td>
+<td align="right">71.4</td>
+<td align="right">1.2</td>
+<td align="right">148.7</td>
+<td align="right">5.9</td>
+<td align="right">12.3</td>
+<td align="right">2.3</td>
+</tr>
+<tr>
+<td align="left">18</td>
+<td align="right">1.0</td>
+<td align="right">8.2</td>
+<td align="right">71.8</td>
+<td align="right">1.3</td>
+<td align="right">159.4</td>
+<td align="right">6.0</td>
+<td align="right">11.8</td>
+<td align="right">2.5</td>
+</tr>
+<tr>
+<td align="left">19</td>
+<td align="right">0.4</td>
+<td align="right">12.9</td>
+<td align="right">74.4</td>
+<td align="right">1.1</td>
+<td align="right">110.7</td>
+<td align="right">6.2</td>
+<td align="right">15.6</td>
+<td align="right">1.6</td>
+</tr>
+<tr>
+<td align="left">20</td>
+<td align="right">0.8</td>
+<td align="right">12.7</td>
+<td align="right">79.6</td>
+<td align="right">1.1</td>
+<td align="right">112.9</td>
+<td align="right">6.6</td>
+<td align="right">16.5</td>
+<td align="right">1.8</td>
+</tr>
+</tbody></table>
+
+</body>
+
+</html>

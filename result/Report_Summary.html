@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Caffeine Concentration Simulation</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<div id="toc">
+<div id="toc_header">Table of Contents</div>
+<ul>
+<li>
+<a href="#toc_0">Caffeine Concentration Simulation</a>
+<ul>
+<li>
+<a href="#toc_1">Introduction</a>
+<ul>
+<li>
+<a href="#toc_2">Caffeine Contents</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_3">Materials and Methods</a>
+</li>
+<li>
+<a href="#toc_4">Results</a>
+<ul>
+<li>
+<a href="#toc_5">Single Dose</a>
+<ul>
+<li>
+<a href="#toc_6">Figure 1. Concentration-Time Plot</a>
+</li>
+<li>
+<a href="#toc_7">Table 1. Descriptive Statistics of Single Dose PK Parameters</a>
+</li>
+<li>
+<a href="#toc_8">Figure 2. Cmax Plot</a>
+</li>
+<li>
+<a href="#toc_9">Figure 3. AUC Plot</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_10">Multiple Dose</a>
+<ul>
+<li>
+<a href="#toc_11">Figure 4. Concentration-Time Plot</a>
+</li>
+<li>
+<a href="#toc_12">Table 2. Descriptive Statistics of Multiple Dose PK Parameters</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_13">Acknowledgements</a>
+</li>
+<li>
+<a href="#toc_14">Reference</a>
+</li>
+<li>
+<a href="#toc_15">Contact</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+<h1 id="toc_0">Caffeine Concentration Simulation</h1>
+
+<ul>
+<li>Report Time: 2017-08-10 11:56:49 </li>
+</ul>
+
+<h2 id="toc_1">Introduction</h2>
+
+<ul>
+<li><code>Caffeine Concentration Simulation</code> <a href="https://www.edison.re.kr/web/cmed/run_simulation">https://www.edison.re.kr/web/cmed/run_simulation</a></li>
+<li>There is also <code>Caffeine Concentration Predictor</code> shiny app. <a href="https://asan.shinyapps.io/caff">https://asan.shinyapps.io/caff</a></li>
+<li><code>Caffeine Concentration Simulation</code> is open to everyone. We are happy to take your input. Please fork the repo, modify the codes and submit a pull request. <a href="https://github.com/shanmdphd/CaffeineEdison">https://github.com/shanmdphd/CaffeineEdison</a></li>
+</ul>
+
+<h3 id="toc_2">Caffeine Contents</h3>
+
+<ul>
+<li>Red Bull®, 80 mg</li>
+<li>Monster® and Rockstar®, 160 mg</li>
+<li>5 h Energy Extra Strength® 242 mg</li>
+</ul>
+
+<h2 id="toc_3">Materials and Methods</h2>
+
+<p><strong>Simulation Condition</strong></p>
+
+<p>Simulation is shown in \@ref(tab:SimulationCondition).</p>
+
+<table><thead>
+<tr>
+<th align="left">Input</th>
+<th align="left">Value</th>
+<th align="left">Unit</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">Body Weight</td>
+<td align="left">30</td>
+<td align="left">kg</td>
+</tr>
+<tr>
+<td align="left">Caffeine Dose</td>
+<td align="left">250</td>
+<td align="left">mg</td>
+</tr>
+<tr>
+<td align="left">Simulation Subject N</td>
+<td align="left">20</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Log Y-axis</td>
+<td align="left">FALSE</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Plot Format</td>
+<td align="left">Jitter</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Multiple Dosing Interval</td>
+<td align="left">12</td>
+<td align="left">hour</td>
+</tr>
+<tr>
+<td align="left">Multiple Dosing</td>
+<td align="left">5</td>
+<td align="left">times</td>
+</tr>
+</tbody></table>
+
+<p><strong>Pharmacokinetic Parameters</strong></p>
+
+<p>The pharmacokinetic parameters from the paper [1] were derived and used in the app as follows:</p>
+
+<p>\[
+\begin{split}
+\begin{bmatrix}
+     \eta_1\\
+     \eta_2\\
+     \eta_3
+\end{bmatrix}
+& \sim MVN \bigg(
+\begin{bmatrix}
+     0\\
+     0\\
+     0
+\end{bmatrix}
+, 
+\begin{bmatrix}
+     0.1599 & 6.095 \cdot 10^{-2} & 9.650 \cdot 10^{-2}\\
+     6.095 \cdot 10^{-2} & 4.746 \cdot 10^{-2} & 1.359 \cdot 10^{-2}\\
+     9.650 \cdot 10^{-2} & 1.359 \cdot 10^{-2} & 1.004
+\end{bmatrix}
+\bigg)
+\end{split}
+\]</p>
+
+<p>\[
+\begin{split}
+CL\ (mg/L) &= 0.09792 \cdot W \cdot e^{\eta1}\\
+V\ (L) &= 0.7219 \cdot W \cdot e^{\eta2}\\
+k_a\ (1/hr) &= 4.268 \cdot e^{\eta3}
+\end{split}
+\]</p>
+
+<p>\[
+\begin{split}
+k\ (1/hr) & = \frac{CL}{V}\\
+t_{1/2}\ (hr) & = \frac{0.693}{k}\\
+t_{max}\ (hr) & = \frac{ln(k_a) - ln(k)}{k_a - k}\\
+C_{max}\ (mg/L) & = \frac{Dose}{V} \cdot \frac{k_a}{k_a - k} \cdot (e^{-k \cdot  t_{max}} - e^{-k_a \cdot t_{max}})\\
+AUC\ (mg \cdot hr / L)  & = \frac{Dose}{CL}\\
+\\
+C_{av,ss} & = \frac{Dose}{CL \cdot \tau}\\ 
+AI & = \frac{1}{1-e^{-k_e \cdot \tau}}\\
+\end{split}
+\]</p>
+
+<p>(Abbreviation: \(AI\), accumulation index; \(AUC\), area under the plasma drug concentration-time curve; \(CL\), total clearance of drug from plasma; \(C_{av,ss}\), average drug concentration in plasma during a dosing interval at steady state on administering a fixed dose at equal dosing intervals; \(C_{max}\), highest drug concentration observed in plasma; \(MVN\), multivariate normal distribution; \(V\), Volume of distribution (apparent) based on drug concentration in plasma; \(W\), body weight (kg); \(\eta\), interindividual random variability parameter; \(k\), elimination rate constant;  \(k_a\), absorption rate constant; \(\tau\), dosing interval; \(t_{1/2}\), elimination half-life)</p>
+
+<h2 id="toc_4">Results</h2>
+
+<h3 id="toc_5">Single Dose</h3>
+
+<h4 id="toc_6">Figure 1. Concentration-Time Plot</h4>
+
+<p><img src="Plot_SingleDose.jpg" alt=""></p>
+
+<p><strong>Reference range</strong></p>
+
+<ul>
+<li>Below 10 mg/L: generally considered safe (Green horizontal line)</li>
+<li>Over 40 mg/L: several fatalities (Blue horizontal line)</li>
+<li>Over 80 mg/L: fatal caffeine poisoning (Red horizontal line)</li>
+<li>Reference: de Wijkerslooth LR et al.(2008), Seifert et al.(2013), Banerjee et al. (2014), Cannon et al. (2001)</li>
+</ul>
+
+<h4 id="toc_7">Table 1. Descriptive Statistics of Single Dose PK Parameters</h4>
+
+<table><thead>
+<tr>
+<th align="left"></th>
+<th align="left">Parameter</th>
+<th align="right">median</th>
+<th align="right">sd</th>
+<th align="right">min</th>
+<th align="right">Q0.25</th>
+<th align="right">mean</th>
+<th align="right">Q0.75</th>
+<th align="right">max</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">T~max~ (hr)</td>
+<td align="right">0.6</td>
+<td align="right">0.5</td>
+<td align="right">0.2</td>
+<td align="right">0.4</td>
+<td align="right">0.8</td>
+<td align="right">1.0</td>
+<td align="right">2.3</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">C~max~ (mg/L)</td>
+<td align="right">10.2</td>
+<td align="right">2.4</td>
+<td align="right">6.8</td>
+<td align="right">8.6</td>
+<td align="right">10.4</td>
+<td align="right">11.9</td>
+<td align="right">14.7</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">AUC (mg*hr/L)</td>
+<td align="right">79.0</td>
+<td align="right">34.5</td>
+<td align="right">40.5</td>
+<td align="right">55.7</td>
+<td align="right">84.9</td>
+<td align="right">107.9</td>
+<td align="right">172.1</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">Half-life (hr)</td>
+<td align="right">4.9</td>
+<td align="right">1.4</td>
+<td align="right">2.6</td>
+<td align="right">3.8</td>
+<td align="right">4.9</td>
+<td align="right">5.7</td>
+<td align="right">8.2</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">CL (L/hr)</td>
+<td align="right">3.2</td>
+<td align="right">1.3</td>
+<td align="right">1.5</td>
+<td align="right">2.3</td>
+<td align="right">3.4</td>
+<td align="right">4.5</td>
+<td align="right">6.2</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">V (L)</td>
+<td align="right">21.9</td>
+<td align="right">4.5</td>
+<td align="right">16.3</td>
+<td align="right">19.1</td>
+<td align="right">22.2</td>
+<td align="right">24.7</td>
+<td align="right">35.0</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">K~a~ (1/hr)</td>
+<td align="right">6.3</td>
+<td align="right">6.3</td>
+<td align="right">1.0</td>
+<td align="right">3.2</td>
+<td align="right">8.1</td>
+<td align="right">11.0</td>
+<td align="right">23.6</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">K~e~ (1/hr)</td>
+<td align="right">0.1</td>
+<td align="right">0.0</td>
+<td align="right">0.1</td>
+<td align="right">0.1</td>
+<td align="right">0.2</td>
+<td align="right">0.2</td>
+<td align="right">0.3</td>
+</tr>
+</tbody></table>
+
+<h4 id="toc_8">Figure 2. Cmax Plot</h4>
+
+<p><img src="Plot_Cmax.jpg" alt=""></p>
+
+<h4 id="toc_9">Figure 3. AUC Plot</h4>
+
+<p><img src="Plot_AUC.jpg" alt=""></p>
+
+<h3 id="toc_10">Multiple Dose</h3>
+
+<h4 id="toc_11">Figure 4. Concentration-Time Plot</h4>
+
+<p><img src="Plot_MultipleDose.jpg" alt=""></p>
+
+<p><strong>Reference range</strong></p>
+
+<ul>
+<li>Below 10 mg/L: generally considered safe (Green horizontal line)</li>
+<li>Over 40 mg/L: several fatalities (Blue horizontal line)</li>
+<li>Over 80 mg/L: fatal caffeine poisoning (Red horizontal line)</li>
+<li>Reference: de Wijkerslooth LR et al.(2008), Seifert et al.(2013), Banerjee et al. (2014), Cannon et al. (2001)</li>
+</ul>
+
+<h4 id="toc_12">Table 2. Descriptive Statistics of Multiple Dose PK Parameters</h4>
+
+<table><thead>
+<tr>
+<th align="left"></th>
+<th align="left">Parameter</th>
+<th align="right">median</th>
+<th align="right">sd</th>
+<th align="right">min</th>
+<th align="right">Q0.25</th>
+<th align="right">mean</th>
+<th align="right">Q0.75</th>
+<th align="right">max</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">T~max,single~ (hr)</td>
+<td align="right">0.9</td>
+<td align="right">1.8</td>
+<td align="right">0.2</td>
+<td align="right">0.5</td>
+<td align="right">1.4</td>
+<td align="right">1.7</td>
+<td align="right">8.4</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">C~max,single~ (mg/L)</td>
+<td align="right">11.9</td>
+<td align="right">2.8</td>
+<td align="right">4.0</td>
+<td align="right">10.1</td>
+<td align="right">11.3</td>
+<td align="right">12.8</td>
+<td align="right">17.0</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">AUC~single~ (mg*hr/L)</td>
+<td align="right">92.5</td>
+<td align="right">29.8</td>
+<td align="right">60.1</td>
+<td align="right">73.3</td>
+<td align="right">98.8</td>
+<td align="right">124.0</td>
+<td align="right">161.7</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">R~ac~ (1/hr)</td>
+<td align="right">1.3</td>
+<td align="right">0.2</td>
+<td align="right">1.1</td>
+<td align="right">1.1</td>
+<td align="right">1.3</td>
+<td align="right">1.4</td>
+<td align="right">1.6</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">A~av,ss~ (mg)</td>
+<td align="right">158.4</td>
+<td align="right">47.3</td>
+<td align="right">87.0</td>
+<td align="right">112.9</td>
+<td align="right">158.8</td>
+<td align="right">185.3</td>
+<td align="right">265.0</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">C~av,ss~ (mg/L)</td>
+<td align="right">7.7</td>
+<td align="right">2.5</td>
+<td align="right">5.0</td>
+<td align="right">6.1</td>
+<td align="right">8.2</td>
+<td align="right">10.3</td>
+<td align="right">13.5</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">C~max,ss~ (mg/L)</td>
+<td align="right">16.6</td>
+<td align="right">3.0</td>
+<td align="right">11.7</td>
+<td align="right">14.8</td>
+<td align="right">16.6</td>
+<td align="right">18.8</td>
+<td align="right">21.2</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">C~min,ss~ (mg/L)</td>
+<td align="right">3.3</td>
+<td align="right">2.0</td>
+<td align="right">0.9</td>
+<td align="right">1.8</td>
+<td align="right">3.5</td>
+<td align="right">4.8</td>
+<td align="right">8.1</td>
+</tr>
+</tbody></table>
+
+<h2 id="toc_13">Acknowledgements</h2>
+
+<p>The main idea and intellectual resources were mainly provided by Professor Kyun-Seop Bae <a href="mailto:k@acr.kr">k@acr.kr</a>.</p>
+
+<h2 id="toc_14">Reference</h2>
+
+<p>This work is solely dependent on the interesting paper published in Eur J Pediatr in 2015. </p>
+
+<ol>
+<li>&quot;Prediction of plasma caffeine concentrations in young adolescents following ingestion of caffeinated energy drinks: a Monte Carlo simulation.&quot; Eur J Pediatr. 2015 Dec;174(12):1671-8. doi: 10.1007/s00431-015-2581-x <a href="https://www.ncbi.nlm.nih.gov/pubmed/26113286">https://www.ncbi.nlm.nih.gov/pubmed/26113286</a></li>
+<li>&quot;Clinical pharmacokinetics and pharmacodynamics: concepts and applications, 4th edition&quot; Lippincott Williams &amp; Wilkins. 2011. ISBN 978-0-7817-5009-7</li>
+</ol>
+
+<p><strong>R Packages</strong></p>
+
+<ul>
+<li>H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2009.</li>
+<li>Winston Chang, Joe Cheng, JJ Allaire, Yihui Xie and Jonathan McPherson (2016). shiny: Web Application Framework for R. R package version 0.14.2. <a href="https://CRAN.R-project.org/package=shiny">https://CRAN.R-project.org/package=shiny</a></li>
+<li>JJ Allaire, Jeffrey Horner, Vicent Marti and Natacha Porte (2015). markdown: &#39;Markdown&#39; Rendering for R. R package version 0.7.7. <a href="https://CRAN.R-project.org/package=markdown">https://CRAN.R-project.org/package=markdown</a></li>
+<li>Hadley Wickham and Romain Francois (2016). dplyr: A Grammar of Data Manipulation. R package version 0.5.0. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a></li>
+</ul>
+
+<h2 id="toc_15">Contact</h2>
+
+<ul>
+<li><code>Caffeine Concentration Simulation</code> Edison Science App developer: Sungpil Han <a href="mailto:shan@acp.kr">shan@acp.kr</a> / <a href="https://shanmdphd.github.io">https://shanmdphd.github.io</a></li>
+<li>Copyright: 2016, Sungpil Han</li>
+<li>License: GPL-3</li>
+</ul>
+
+</body>
+
+</html>
