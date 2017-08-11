@@ -22,17 +22,6 @@ Args <- commandArgs(trailingOnly = TRUE) # SKIP THIS LINE IN R if you're testing
 if (identical(Args, character(0))) Args <- c("-inp", "data-raw/input.deck")
 if (Args[1] == "-inp") InputParameter <- Args[2] # InputPara.inp
 
-#                V2
-#concBWT         30
-#concDose       250
-#concNum         20
-#Log           TRUE
-#pformat     Jitter
-#superTau        12
-#superRepeat      5
-
-# input -------------------------------------------------------------------
-
 inputInit <- read.table(InputParameter, row.names = 1, sep = "=",  comment.char = ";",
                         strip.white = TRUE, stringsAsFactors = FALSE)
 
