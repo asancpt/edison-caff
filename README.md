@@ -1,4 +1,4 @@
-# README: Caffeine Concentration Simulation
+# README: Edison Caffeine Concentration Simulation
 
 [![Build Status](https://travis-ci.org/asancpt/CaffeineEdison.svg?branch=master)](https://travis-ci.org/asancpt/CaffeineEdison)
 
