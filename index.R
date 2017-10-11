@@ -4,9 +4,9 @@
 
 source("R/function.R")
 
-localLibPath <- c("./lib", .libPaths())
-if (Get_os() == 'linux') .libPaths(localLibPath)
-.libPaths()
+# localLibPath <- c("./lib", .libPaths())
+# if (Get_os() == 'linux') .libPaths(localLibPath)
+# .libPaths()
 
 library(caffsim) # devtools::install_github('asancpt/caffsim')
 
@@ -141,3 +141,6 @@ system(ifelse(Get_os() != "linux", "ls result/*.jpg", 'rm result/*.pdf'))
 system(paste0('rm ', file_doc, ".md ", file_doc2, ".md"))
 
 # system('cp result/*.jpg ./')
+
+print(sessionInfo())
+print(capabilities())
