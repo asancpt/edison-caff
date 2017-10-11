@@ -3,20 +3,30 @@
 # setup ----
 
 source("R/function.R")
-.libPaths()
-localLibPath <- c("./lib", .libPaths())
-if (grepl('linux', R.version$os)) .libPaths(localLibPath)
 
+if (grepl('linux', R.version$os)) .libPaths(c("./lib", .libPaths()))
 print('libPaths modified')
 .libPaths()
 
 library(caffsim) # devtools::install_github('asancpt/caffsim')
 
-edisonlib <- c("tidyverse", "mgcv", "psych", "markdown", "knitr")
-lapply(edisonlib, function(pkg) {
-  if (system.file(package = pkg) == '') install.packages(pkg)
-})
-lapply(edisonlib, library, character.only = TRUE) # if needed # install.packages(mylib, lib = localLibPath)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(purrr)
+library(readr)
+
+library(markdown)
+library(knitr)
+library(mgcv)
+library(psych)
+
+# edisonlib <- c("tidyverse", "mgcv", "psych", "markdown", "knitr")
+# lapply(edisonlib, function(pkg) {
+#   if (system.file(package = pkg) == '') install.packages(pkg)
+# })
+# lapply(edisonlib, library, character.only = TRUE) # if needed # install.packages(mylib, lib = localLibPath)
 
 if (length(intersect(dir(), "result")) == 0) system("mkdir result")
 
@@ -24,18 +34,17 @@ Args <- commandArgs(trailingOnly = TRUE) # SKIP THIS LINE IN R if you're testing
 if (identical(Args, character(0))) Args <- c("-inp", "data-raw/input.deck")
 if (Args[1] == "-inp") InputParameter <- Args[2] # InputPara.inp
 
-inputInit <- read.table(InputParameter, row.names = 1, sep = "=",  comment.char = ";",
-                        strip.white = TRUE, stringsAsFactors = FALSE)
-
-input <- as_tibble(t(inputInit)) %>%
+inputInit <- readr::read_delim(InputParameter, delim = '=', comment = ';', col_names = FALSE, trim_ws = TRUE) 
+input <- inputInit %>% 
+  spread(X1, X2) %>% 
   mutate_at(vars(concBWT, concDose, concNum, superTau, superRepeat), as.numeric) %>% 
   mutate_at(vars(Log), as.logical)
 
-inputSummary <- as_tibble(inputInit) %>%
+inputSummary <- inputInit %>%
   mutate(Input = c("Body Weight", "Caffeine Dose", "Simulation Subject N", "Log Y-axis", "Plot Format", 
                    "Multiple Dosing Interval", "Multiple Dosing")) %>% 
   mutate(Unit = c("kg", "mg", "", "", "", "hour", "times")) %>% 
-  select(Input, Value = 1, Unit)
+  select(Input, Value = X2, Unit)
 
 write.csv(inputSummary, "result/Data_InputSummary.csv", row.names = FALSE)
 
