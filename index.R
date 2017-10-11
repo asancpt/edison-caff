@@ -3,10 +3,12 @@
 # setup ----
 
 source("R/function.R")
+.libPaths()
+localLibPath <- c("./lib", .libPaths())
+if (grepl('linux', R.version$os)) .libPaths(localLibPath)
 
-# localLibPath <- c("./lib", .libPaths())
-# if (Get_os() == 'linux') .libPaths(localLibPath)
-# .libPaths()
+print('libPaths modified')
+.libPaths()
 
 library(caffsim) # devtools::install_github('asancpt/caffsim')
 
