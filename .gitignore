@@ -1,5 +1,4 @@
-lib
-lib.zip
+lib*
 
 # History files
 .Rhistory
