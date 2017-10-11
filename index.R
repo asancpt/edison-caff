@@ -3,30 +3,28 @@
 # setup ----
 
 source("R/function.R")
+options(bitmapType='cairo')
 
 if (grepl('linux', R.version$os)) .libPaths(c("./lib", .libPaths()))
-print('libPaths modified')
-.libPaths()
+print('libPaths() modified')
+print(.libPaths())
 
 library(caffsim) # devtools::install_github('asancpt/caffsim')
-
 library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(tibble)
 library(purrr)
 library(readr)
-
 library(markdown)
 library(knitr)
 library(mgcv)
 library(psych)
 
-# edisonlib <- c("tidyverse", "mgcv", "psych", "markdown", "knitr")
-# lapply(edisonlib, function(pkg) {
-#   if (system.file(package = pkg) == '') install.packages(pkg)
-# })
-# lapply(edisonlib, library, character.only = TRUE) # if needed # install.packages(mylib, lib = localLibPath)
+print(sessionInfo())
+print(capabilities())
+
+# make `result` folder if not exists
 
 if (length(intersect(dir(), "result")) == 0) system("mkdir result")
 
@@ -35,6 +33,7 @@ if (identical(Args, character(0))) Args <- c("-inp", "data-raw/input.deck")
 if (Args[1] == "-inp") InputParameter <- Args[2] # InputPara.inp
 
 inputInit <- readr::read_delim(InputParameter, delim = '=', comment = ';', col_names = FALSE, trim_ws = TRUE) 
+
 input <- inputInit %>% 
   spread(X1, X2) %>% 
   mutate_at(vars(concBWT, concDose, concNum, superTau, superRepeat), as.numeric) %>% 
@@ -80,8 +79,7 @@ if (input$pformat == "Jitter") output$plot <- (p + geom_jitter(position = positi
 if (input$pformat == "Point") output$plot <- (p + geom_point())
 if (input$pformat == "Boxplot") output$plot <- (p + geom_boxplot())
 
-ggsave(ifelse(Get_os() != "linux", "result/Plot_Cmax.jpg", "result/Plot_Cmax.pdf"), 
-       output$plot, width = 8, height = 4.5)
+ggsave("result/Plot_Cmax.jpg", output$plot, width = 8, height = 4.5)
 
 # Plot_AUC ----------------------------------------------------------------
 
@@ -93,8 +91,7 @@ if (input$pformat == "Jitter") output$aucplot <- (p + geom_jitter(position = pos
 if (input$pformat == "Point") output$aucplot <- (p + geom_point())
 if (input$pformat == "Boxplot") output$aucplot <- (p + geom_boxplot())
 
-ggsave(ifelse(Get_os() != "linux", "result/Plot_AUC.jpg", "result/Plot_AUC.pdf"), 
-       output$aucplot, width = 8, height = 4.5)
+ggsave("result/Plot_AUC.jpg", output$aucplot, width = 8, height = 4.5)
 
 # Single PK ---------------------------------------------------------------
 
@@ -106,8 +103,7 @@ write.csv(DescribeDataset(SingleDataset), "result/Data_SingleDosePK.csv", row.na
 
 output$concplot <- caffPlot(caffConcTime(input$concBWT, input$concDose, input$concNum))
 
-ggsave(ifelse(Get_os() != "linux", "result/Plot_SingleDose.jpg", "result/Plot_SingleDose.pdf"), 
-       output$concplot, width = 8, height = 4.5)
+ggsave("result/Plot_SingleDose.jpg", output$concplot, width = 8, height = 4.5)
 
 # Multiple PK -------------------------------------------------------------
 
@@ -122,18 +118,9 @@ p <- caffPlotMulti(caffConcTimeMulti(input$concBWT, input$concDose, input$concNu
 if (input$Log == FALSE) output$superplot <- (p) else 
   output$superplot <- (p + scale_y_log10()) #limits = c(0.1, max(80, ggsuper$Conc))))
 
-ggsave(ifelse(Get_os() != "linux", "result/Plot_MultipleDose.jpg", "result/Plot_MultipleDose.pdf"), 
-       output$superplot, width = 8, height = 4.5)
+ggsave("result/Plot_MultipleDose.jpg", output$superplot, width = 8, height = 4.5)
 
 # Modification ------------------------------------------------------------
-
-if (Get_os() != "linux") {
-} else {
-  system('convert -density 300 "result/Plot_Cmax.pdf" result/Plot_Cmax.jpg')
-  system('convert -density 300 "result/Plot_AUC.pdf" result/Plot_AUC.jpg')
-  system('convert -density 300 "result/Plot_SingleDose.pdf" result/Plot_SingleDose.jpg')
-  system('convert -density 300 "result/Plot_MultipleDose.pdf" result/Plot_MultipleDose.jpg')
-}
 
 # Summary
 file_doc <- "documentation"
@@ -148,10 +135,5 @@ markdownToHTML(paste0(file_doc2, ".md"), "result/Report_Appendix.html", options 
 # browseURL("result/Report_Appendix.html")
 
 # Tidy
-system(ifelse(Get_os() != "linux", "ls result/*.jpg", 'rm result/*.pdf'))
 system(paste0('rm ', file_doc, ".md ", file_doc2, ".md"))
 
-# system('cp result/*.jpg ./')
-
-print(sessionInfo())
-print(capabilities())
