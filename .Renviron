@@ -1,1 +1,1 @@
-R_LIBS_USER="~/asancpt/edison-caff/lib"
+R_LIBS_SITE="./lib"
