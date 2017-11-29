@@ -2,14 +2,13 @@
 
 # setup ----
 
-source("R/function.R")
 options(bitmapType='cairo')
 
 if (grepl('linux', R.version$os)) .libPaths(c("./lib", .libPaths()))
 print('libPaths() modified')
 print(.libPaths())
 
-library(caffsim) # devtools::install_github('asancpt/caffsim')
+library(caffsim) # devtools::install_github('asancpt/caffsim') # caffsim_0.2.2
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -23,6 +22,15 @@ library(psych)
 
 print(sessionInfo())
 print(capabilities())
+
+round_df <- function(x, digits) {
+    # round all numeric variables
+    # x: data frame 
+    # digits: number of digits to round
+    numeric_columns <- sapply(x, mode) == 'numeric'
+    x[numeric_columns] <-  round(x[numeric_columns], digits)
+    x
+}
 
 # make `result` folder if not exists
 
@@ -49,10 +57,8 @@ write.csv(inputSummary, "result/Data_InputSummary.csv", row.names = FALSE)
 
 output <- list()
 
-#set.seed(Seed)
-showdataTable <- round_df(caffDataset(input$concBWT, input$concDose, input$concNum), 2) %>% 
-  mutate(SUBJID = row_number()) %>% 
-  select(9, 1:8)
+showdataTable <- round_df(caffsim::caffConcTime(input$concBWT, input$concDose, input$concNum), 2) %>% 
+  mutate(SUBJID = row_number())
 
 output$showdata <- showdataTable
 
@@ -60,11 +66,11 @@ output$showdata <- showdataTable
 
 Rnorm <- c(23, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 84)
 
-ggDset <- lapply(Rnorm, function(x){
-  caffDataset(x, input$concDose, input$concNum) %>% 
-    select(Tmax, Cmax, AUC, Half_life, CL, V) %>% 
-    mutate(BWT = x)
-}) %>% bind_rows()
+ggDset <- Rnorm %>% 
+  map(~caffsim::caffPkparam(.x, input$concDose, input$concNum) %>% 
+        select(Tmax, Cmax, AUC, Half_life, CL, V) %>% 
+        mutate(BWT = .x)) %>% 
+  bind_rows()
 
 p <- ggplot(ggDset, aes(x=factor(BWT), y=Cmax, colour=Cmax)) +
   xlab("Body Weight (kg)") + ylab("Cmax (mg/L)") +
@@ -96,31 +102,33 @@ ggsave("result/Plot_AUC.jpg", output$aucplot, width = 8, height = 4.5)
 # Single PK ---------------------------------------------------------------
 
 #set.seed(Seed)
-SingleDataset <- caffDataset(input$concBWT, input$concDose, input$concNum)
+SingleDataset <- caffsim::caffPkparam(input$concBWT, input$concDose, input$concNum)
 
 write.csv(SingleDataset, "result/Data_SingleDose.csv", row.names = FALSE)
-write.csv(DescribeDataset(SingleDataset), "result/Data_SingleDosePK.csv", row.names = FALSE)
+write.csv(caffsim::caffDescstat(SingleDataset), "result/Data_SingleDosePK.csv", row.names = FALSE)
 
-output$concplot <- caffPlot(caffConcTime(input$concBWT, input$concDose, input$concNum))
+output$concplot <- caffsim::caffConcTime(input$concBWT, input$concDose, input$concNum) %>% 
+  caffsim::caffPlot()
 
 ggsave("result/Plot_SingleDose.jpg", output$concplot, width = 8, height = 4.5)
 
 # Multiple PK -------------------------------------------------------------
 
 #set.seed(Seed)
-MultipleDataset <- caffDatasetMulti(input$concBWT, input$concDose, input$concNum, input$superTau)
+MultipleDataset <- caffsim::caffPkparamMulti(input$concBWT, input$concDose, input$concNum, input$superTau)
 
 write.csv(MultipleDataset, "result/Data_MultipleDose.csv", row.names = FALSE)
-write.csv(DescribeDataset(MultipleDataset), "result/Data_MultipleDosePK.csv", row.names = FALSE)
+write.csv(caffsim::caffDescstat(MultipleDataset), "result/Data_MultipleDosePK.csv", row.names = FALSE)
 
-p <- caffPlotMulti(caffConcTimeMulti(input$concBWT, input$concDose, input$concNum, input$superTau, input$superRepeat))
+p <- caffsim::caffConcTimeMulti(input$concBWT, input$concDose, input$concNum, input$superTau, input$superRepeat) %>% 
+  caffsim::caffPlotMulti()
 
 if (input$Log == FALSE) output$superplot <- (p) else 
   output$superplot <- (p + scale_y_log10()) #limits = c(0.1, max(80, ggsuper$Conc))))
 
 ggsave("result/Plot_MultipleDose.jpg", output$superplot, width = 8, height = 4.5)
 
-# Modification ------------------------------------------------------------
+# Rmarkdown ----
 
 # Summary
 file_doc <- "documentation"
@@ -136,4 +144,3 @@ markdownToHTML(paste0(file_doc2, ".md"), "result/Report_Appendix.html", options 
 
 # Tidy
 system(paste0('rm ', file_doc, ".md ", file_doc2, ".md"))
-

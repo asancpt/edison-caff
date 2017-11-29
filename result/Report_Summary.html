@@ -234,7 +234,7 @@ hr {
 <h1 id="toc_0">Caffeine Concentration Simulation</h1>
 
 <ul>
-<li>Report Time: 2017-08-10 13:21:22 </li>
+<li>Report Time: 2017-11-29 17:06:32 </li>
 </ul>
 
 <h2 id="toc_1">Introduction</h2>
@@ -248,9 +248,9 @@ hr {
 <h3 id="toc_2">Caffeine Contents</h3>
 
 <ul>
-<li>Red Bull®, 80 mg</li>
-<li>Monster® and Rockstar®, 160 mg</li>
-<li>5 h Energy Extra Strength® 242 mg</li>
+<li>Red Bull짰, 80 mg</li>
+<li>Monster짰 and Rockstar짰, 160 mg</li>
+<li>5 h Energy Extra Strength짰 242 mg</li>
 </ul>
 
 <h2 id="toc_3">Materials and Methods</h2>
@@ -259,11 +259,49 @@ hr {
 
 <p>Simulation is shown in \@ref(tab:SimulationCondition).</p>
 
-<pre><code>## Error in file(file, &quot;rt&quot;): 커넥션을 열 수 없습니다
-</code></pre>
-
-<pre><code>## Error in inherits(x, &quot;list&quot;): 객체 &#39;inputData&#39;를 찾을 수 없습니다
-</code></pre>
+<table><thead>
+<tr>
+<th align="left">Input</th>
+<th align="left">Value</th>
+<th align="left">Unit</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">Body Weight</td>
+<td align="left">30</td>
+<td align="left">kg</td>
+</tr>
+<tr>
+<td align="left">Caffeine Dose</td>
+<td align="left">250</td>
+<td align="left">mg</td>
+</tr>
+<tr>
+<td align="left">Simulation Subject N</td>
+<td align="left">20</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Log Y-axis</td>
+<td align="left">FALSE</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Plot Format</td>
+<td align="left">Jitter</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Multiple Dosing Interval</td>
+<td align="left">12</td>
+<td align="left">hour</td>
+</tr>
+<tr>
+<td align="left">Multiple Dosing</td>
+<td align="left">5</td>
+<td align="left">times</td>
+</tr>
+</tbody></table>
 
 <p><strong>Pharmacokinetic Parameters</strong></p>
 
@@ -334,8 +372,54 @@ AI & = \frac{1}{1-e^{-k_e \cdot \tau}}\\
 
 <h4 id="toc_7">Table 1. Descriptive Statistics of Single Dose PK Parameters</h4>
 
-<pre><code>## Error in file(file, &quot;rt&quot;): 커넥션을 열 수 없습니다
-</code></pre>
+<table><thead>
+<tr>
+<th align="left"></th>
+<th align="left">PK.parameters</th>
+<th align="left">value..mean..sd...min.max.</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">AUC</td>
+<td align="left">109.92 (55.57) [53.29-274.94]</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">CL</td>
+<td align="left">2.74 (1.09) [0.91-4.69]</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">Cmax</td>
+<td align="left">10.85 (2.44) [7.10-15.90]</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">Half_life</td>
+<td align="left">5.87 (1.96) [3.36-11.35]</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">Ka</td>
+<td align="left">7.02 (10.88) [0.45-45.69]</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">Ke</td>
+<td align="left">0.13 (0.04) [0.06-0.21]</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">Tmax</td>
+<td align="left">1.39 (1.25) [0.13-4.64]</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">V</td>
+<td align="left">20.78 (4.48) [13.72-28.52]</td>
+</tr>
+</tbody></table>
 
 <h4 id="toc_8">Figure 2. Cmax Plot</h4>
 
@@ -362,8 +446,54 @@ AI & = \frac{1}{1-e^{-k_e \cdot \tau}}\\
 
 <h4 id="toc_12">Table 2. Descriptive Statistics of Multiple Dose PK Parameters</h4>
 
-<pre><code>## Error in file(file, &quot;rt&quot;): 커넥션을 열 수 없습니다
-</code></pre>
+<table><thead>
+<tr>
+<th align="left"></th>
+<th align="left">PK.parameters</th>
+<th align="left">value..mean..sd...min.max.</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">Aavss</td>
+<td align="left">162.59 (36.92) [105.52-227.12]</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">AI</td>
+<td align="left">1.28 (0.12) [1.10-1.50]</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">AUCS</td>
+<td align="left">86.79 (27.88) [44.88-150.98]</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">Cavss</td>
+<td align="left">7.23 (2.32) [3.74-12.58]</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">CmaxS</td>
+<td align="left">9.69 (2.85) [5.98-16.25]</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">Cmaxss</td>
+<td align="left">14.30 (3.80) [8.54-23.16]</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">Cminss</td>
+<td align="left">3.07 (1.47) [1.16-6.33]</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">TmaxS</td>
+<td align="left">1.17 (0.88) [0.20-3.82]</td>
+</tr>
+</tbody></table>
 
 <h2 id="toc_13">Acknowledgements</h2>
 
