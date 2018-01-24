@@ -3,3 +3,6 @@ updatelib:
 
 ziplib:
 	zip -FSr lib-tidyverse.zip lib/*
+
+readme:
+	Rscript
